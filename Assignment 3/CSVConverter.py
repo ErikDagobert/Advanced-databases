@@ -11,9 +11,36 @@ print("@base <http://www.semanticweb.org/kemp/ontologies/2019/3/untitled-ontolog
 
 with open('Courses.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
+    deps = []
+    divs = []
     for row in reader:
         # Object class declaration:
         print(row['Course name'] + " rdf:type Course .")
+        if not (row['Division'] in divs):
+            if row['Department'] in deps:
+                divs.append(row['Division'])
+                print(row['Division'] + " rdf:type Division .")
+            else:
+                deps.append(row['Department'])
+                divs.append(row['Division'])
+                print(row['Division'] + " rdf:type Division .")
+                print(row['Department'] + " rdf:type Department .")
+
         # Data properties:
-        print(row['Course name'] + " :courseCode " + row['Course code'])
-        print(row['Course name'] + " :credits " + row['Credits'])
+        print(row['Course name'] + " :courseCode " + row['Course code'] + " .")
+        print(row['Course name'] + " :courseName " + row['Course name'] + " .")
+        print(row['Course name'] + " :credits " + row['Credits'] + " .")
+        print(row['Course name'] + " :level " + row['Level'] + " .")  # Caps!
+
+        # Object properties:
+        
+
+
+with open('Programmes.csv', newline='') as csvfile:
+    reader = csv.DictReader(csvfile)
+
+
+            
+
+
+
