@@ -17,6 +17,13 @@ tas = set()
 courses = set()
 hoursIds = set()
 
+
+# HELPER FUNCTION
+
+def clean(text):
+    return text.strip().replace(" ", "_").replace("-", "")
+
+
 # 1. STUDENTS
 
 with open("Students.csv", "r", encoding="utf-8") as file:
@@ -25,7 +32,7 @@ with open("Students.csv", "r", encoding="utf-8") as file:
 
     for row in reader:
 
-        sid = row["Student id"]
+        sid = clean(row["Student id"])
 
         graduated = row["Graduated"].lower()
 
@@ -34,8 +41,8 @@ with open("Students.csv", "r", encoding="utf-8") as file:
                     gu:studentId {sid} ;
                     gu:studentName "{row['Student name']}" ;
                     gu:year "{row['Year']}" ;
-                    gu:graduated {graduated} .
-                    gu:belongsToProgram gu:Programme_{row['Programme']}
+                    gu:graduated {graduated} ;
+                    gu:belongsToProgram gu:Programme_{row['Programme']} .
                     """)
 
 # 2. SENIOR TEACHERS
@@ -46,9 +53,9 @@ with open("Senior_Teachers.csv", "r", encoding="utf-8") as file:
 
     for row in reader:
 
-        teacher_id = row["Teacher id"]
+        teacher_id = clean(row["Teacher id"])
         department = row["Department name"]
-        division = row["Division name"]
+        division = clean(row["Division name"])
 
         output.write(f"""
                      gu:{teacher_id} rdf:type gu:SeniorTeacher ;
@@ -80,9 +87,9 @@ with open("Teaching_Assistants.csv", "r", encoding="utf-8") as file:
 
     for row in reader:
 
-        teacher_id = row["Teacher id"]
+        teacher_id = clean(row["Teacher id"])
         department = row["Department name"]
-        division = row["Division name"]
+        division = clean(row["Division name"])
 
         output.write(f"""
                      gu:{teacher_id} rdf:type gu:TeachingAssistant ;
@@ -113,10 +120,10 @@ with open('Programmes.csv', newline='', encoding='utf-8') as csvfile:
 
     for row in reader:
 
-        code = row.get('Programme code')
+        code = clean(row.get('Programme code'))
         programme_name = row.get('Programme name')
         department = row.get('Department name')
-        director = row.get('Director')
+        director = clean(row.get('Director'))
 
         output.write(f"""
                      gu:Programme_{code} rdf:type gu:Programme ;
@@ -138,20 +145,20 @@ with open("Courses.csv", "r", encoding="utf-8") as file:
         course_code = row.get('Course code')
         credits = row.get('Credits')
         level = row.get('Level')
-        division = row.get('Division')
+        division = clean(row.get('Division'))
         department = row.get('Department')
         programme = row.get('Owned by')
 
         if department and department not in departments:
             departments.add(department)
             output.write(f"""
-                        gu:Department_{department} rdf:type gu:Department ;
+                        gu:Department_{department} rdf:type gu:Department .
                         """)
 
         if division and division not in divisions:
             output.write(f"""
                         gu:Division_{division} rdf:type gu:Division ;
-                        gu:divisionOf gu:Department_{department}
+                        gu:divisionOf gu:Department_{department} .
                         """)
 
         output.write(f"""
@@ -172,12 +179,11 @@ with open("Course_Instances.csv", "r", encoding="utf-8") as file:
 
     for row in reader:
 
-        instance_id = row.get("Instance_id")
+        instance_id = clean(row.get("Instance_id"))
         course_code = row.get('Course code')
         study_period = row.get('Study period')
         academic_year = row.get('Academic year')[:4]
-        course_instance = row.get('Instance_id')
-        examiner = row.get('Examiner')
+        examiner = clean(row.get('Examiner'))
 
         output.write(f"""
                      gu:Course_Instance_{instance_id} rdf:type gu:Course_instance ;
@@ -199,14 +205,14 @@ with open("Assigned_Hours.csv", "r", encoding="utf-8") as file:
         course = row.get('Course code')
         # study_period = row.get('Study Period')
         academic_year = row.get('Academic Year')[:4]
-        teacher = row.get('Teacher Id')
+        teacher = clean(row.get('Teacher Id'))
         assigned_hours = row.get('Hours')
         course_instance = row.get('Course Instance')
         hoursId = f"Hours_Id_{teacher}_{course_instance}"
 
         output.write(f"""
                      gu:{hoursId} rdf:type gu:Hours ;
-                     gu:hoursId {hoursIds} ;
+                     gu:hoursId "{hoursId}" ;
                      gu:assignedHours {assigned_hours} ;
                      gu::hoursIn gu:Course_Instance_{course_instance} .
                      gu:{teacher} gu:hasHours gu:{hoursId} .
@@ -221,13 +227,13 @@ with open("Reported_Hours.csv", "r", encoding="utf-8") as file:
     for row in reader:
 
         course_instance = row.get('Course code')
-        teacher = row.get('Teacher Id')
+        teacher = clean(row.get('Teacher Id'))
         reported_hours = row.get('Hours')
         hoursId = f"Hours_Id_{teacher}_{course_instance}"
 
         output.write(f"""
                      gu:{hoursId} rdf:type gu:Hours ;
-                     gu:hoursId {hoursIds} ;
+                     gu:hoursId "{hoursId}" ;
                      gu:reportedHours {reported_hours} ;
                      gu::hoursIn gu:Course_Instance_{course_instance} .
                      gu:{teacher} gu:hasHours gu:{hoursId} .
@@ -292,7 +298,7 @@ with open("Registrations.csv", "r", encoding="utf-8") as file:
 
     for row in reader:
 
-        student_id = row["Student id"]
+        student_id = clean(row["Student id"])
         grade = row['Grade']
         course_instance = row["Course Instance"]
 
@@ -305,7 +311,7 @@ with open("Registrations.csv", "r", encoding="utf-8") as file:
                      """)
         if grade:
             output.write(f"""
-                        gu:Registrations_{count} gu:grade {row['Grade']}^^xsd:integer ; .
+                        gu:Registrations_{count} gu:grade "{row['Grade']}"^^xsd:integer .
                         """)
         count += 1
 
