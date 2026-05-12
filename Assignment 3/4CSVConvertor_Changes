@@ -1,0 +1,232 @@
+import csv
+
+# Output RDF file
+output = open("assignment3_rdf_withprefix_copy.ttl", "w", encoding="utf-8")
+
+# RDF Prefix
+output.write("""@prefix gu:<http://www.gu.se/ontology/> .
+             @prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+             """)
+
+# 1. STUDENTS
+
+with open("Students.csv", "r", encoding="utf-8") as file:
+
+    reader = csv.DictReader(file)
+
+    for row in reader:
+
+        sid = row["Student id"]
+
+        graduated = row["Graduated"].lower()
+
+        output.write(f"""
+gu:Student_{sid} rdf:type gu:Student ;
+    gu:studentName "{row['Student name']}" ;
+    gu:studentId {sid} ;
+    gu:graduated {graduated} .
+""")
+        
+# 2. SENIOR TEACHERS
+
+with open("Senior_Teachers.csv", "r", encoding="utf-8") as file:
+
+    reader = csv.DictReader(file)
+
+    for row in reader:
+
+        tid = row["Teacher id"]
+
+        division = row["Division name"].replace(" ", "_")
+
+        output.write(f"""
+gu:SeniorTeacher_{tid} rdf:type gu:Senior_Teacher ;
+    gu:teacherName "{row['Teacher name']}" ;
+    gu:teacherId {tid} ;
+    gu:belongsToDivision gu:Division_{division} .
+""")
+        
+# 3. TEACHING ASSISTANTS
+
+with open("Teaching_Assistants.csv", "r", encoding="utf-8") as file:
+
+    reader = csv.DictReader(file)
+
+    for row in reader:
+
+        tid = row["Teacher id"]
+
+        division = row["Division name"].replace(" ", "_")
+
+        output.write(f"""
+gu:TeachingAssistant_{tid} rdf:type gu:Teaching_Assistant ;
+    gu:teacherName "{row['Teacher name']}" ;
+    gu:teacherId {tid} ;
+    gu:belongsToDivision gu:Division_{division} .
+""")
+
+# 4. PROGRAMMES
+
+with open("Programmes.csv", "r", encoding="utf-8") as file:
+
+    reader = csv.DictReader(file)
+
+    for row in reader:
+
+        code = row["Programme code"]
+
+        output.write(f"""
+                     gu:Programmes_{code} rdf:type gu:Programme ;
+                     gu:name "{row['Programme name']}" ;
+                     gu:programmeCode "{code}" ;
+                     gu:department "{row['Department name']}" ;
+                     gu:director "{row['Director']}" .
+                     """)
+# 5. COURSES
+
+with open("Courses.csv", "r", encoding="utf-8") as file:
+
+    reader = csv.DictReader(file)
+
+    for row in reader:
+
+        course_code = row["Course code"]
+
+        output.write(f"""
+                     gu:Courses_{course_code} rdf:type gu:Course ;
+                     gu:courseName "{row['Course name']}" ;
+                     gu:courseCode "{course_code}" ;
+                     gu:credits "{row['Credits']}" ;
+                     gu:level "{row['Level']}" ;
+                     gu:department "{row['Department']}" ;
+                     gu:division "{row['Division']}" ;
+                     gu:ownedBy "{row['Owned By']}" .
+                     """)
+# 6. COURSE INSTANCES
+
+with open("Course_Instances.csv", "r", encoding="utf-8") as file:
+
+    reader = csv.DictReader(file)
+
+    for row in reader:
+
+        instance_id = row["Instance_id"]
+
+        output.write(f"""
+                     gu:Course_Instances_{instance_id} rdf:type gu:CourseInstance ;
+                     gu:instanceId "{instance_id}" ;
+                     gu:courseCode "{row['Course code']}" ;
+                     gu:studyPeriod "{row['Study period']}" ;
+                     gu:academicYear "{row['Academic year']}" ;
+                     gu:examiner "{row['Examiner']}" .
+                     """)
+# 7. ASSIGNED HOURS
+
+with open("Assigned_Hours.csv", "r", encoding="utf-8") as file:
+
+    reader = csv.DictReader(file)
+
+    count = 1  # Counter to create unique RDF resource names for assigned hours
+
+    for row in reader:
+
+        output.write(f"""
+                     gu:Assigned_Hours_{count} rdf:type gu:AssignedHours ;
+                     gu:courseCode "{row['Course code']}" ;
+                     gu:studyPeriod "{row['Study Period']}" ;
+                     gu:academicYear "{row['Academic Year']}" ;
+                     gu:teacherId "{row['Teacher Id']}" ;
+                     gu:hours "{row['Hours']}" ;
+                     gu:courseInstance "{row['Course Instance']}" .
+                     """)
+        count += 1
+
+# 8. REPORTED HOURS
+
+with open("Reported_Hours.csv", "r", encoding="utf-8") as file:
+
+    reader = csv.DictReader(file)
+
+    count = 1
+
+    for row in reader:
+
+        output.write(f"""
+                     gu:Reported_Hours_{count} rdf:type gu:ReportedHours ;
+                     gu:courseInstance "{row['Course code']}" ;
+                     gu:teacherId "{row['Teacher Id']}" ;
+                     gu:hours "{row['Hours']}" .
+                     """)
+        count += 1
+
+# 9. COURSE PLANNINGS
+
+with open("Course_plannings.csv", "r", encoding="utf-8") as file:
+
+    reader = csv.DictReader(file)
+
+    count = 1
+
+    for row in reader:
+
+        output.write(f"""
+                     gu:Course_Plannings_{count} rdf:type gu:CoursePlanning ;
+                     gu:course "{row['Course']}" ;
+                     gu:plannedStudents "{row['Planned number of Students']}" ;
+                     gu:seniorHours "{row['Senior Hours']}" ;
+                     gu:assistantHours "{row['Assistant Hours']}" .
+                     """)
+        count += 1
+
+# 10. PROGRAMME COURSES
+
+with open("Programme_Courses.csv", "r", encoding="utf-8") as file:
+
+    reader = csv.DictReader(file)
+
+    count = 1
+
+    for row in reader:
+
+        output.write(f"""
+                     gu:Programme_Courses_{count} rdf:type gu:ProgrammeCourse ;
+                     gu:programmeCode "{row['Programme code']}" ;
+                     gu:studyYear "{row['Study Year']}" ;
+                     gu:academicYear "{row['Academic Year']}" ;
+                     gu:course "{row['Course']}" ;
+                     gu:courseType "{row['Course Type']}" .
+                     """)
+        count += 1
+
+# 11. REGISTRATIONS
+
+
+
+with open("Registrations.csv", "r", encoding="utf-8") as file:
+
+    reader = csv.DictReader(file)
+
+    count = 1
+
+    for row in reader:
+
+        student_id = row["Student id"]
+        instance = row["Course Instance"]
+
+        output.write(f"""
+gu:Registration_{count} rdf:type gu:Registration ;
+    gu:registrationId "{count}" ;
+    gu:status "{row['Status']}" ;
+    gu:grade "{row['Grade']}"^^xsd:integer ;
+    gu:registrationFor gu:CourseInstance_{instance} .
+
+gu:Student_{student_id} gu:registeredAt gu:Registration_{count} .
+
+gu:CourseInstance_{instance} rdf:type gu:Course_instance .
+""")
+
+        count += 1
+
+output.close()
+
+print("Created RDF file: assignment3_rdf.ttl")
