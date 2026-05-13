@@ -129,8 +129,8 @@ with open('Programmes.csv', newline='', encoding='utf-8') as csvfile:
                      gu:Programme_{code} rdf:type gu:Programme ;
                      gu:programmeName "{programme_name}" ;
                      gu:programmeCode "{code}" ;
-                     gu:belongsToDepartment gu:{department} .
-                     gu:{director} gu:directorOfProgramme gu:{code} .
+                     gu:belongsToDepartment gu:Department_{department} .
+                     gu:{director} gu:directorOfProgramme gu:Programme_{code} .
                      """)
 
 # 5. COURSES
@@ -167,7 +167,7 @@ with open("Courses.csv", "r", encoding="utf-8") as file:
                     gu:courseName "{course}" ;
                     gu:credits "{credits}" ;
                     gu:level "{level}" ;
-                    gu:givenByDivision gu:{division} ;
+                    gu:givenByDivision gu:Division_{division} ;
                     gu:ownedByProgramme gu:Programme_{programme} .
                     """)
 
@@ -191,7 +191,7 @@ with open("Course_Instances.csv", "r", encoding="utf-8") as file:
                      gu:instanceId "{instance_id}" ;
                      gu:studyPeriod "{study_period}" ;
                      gu:instanceOf gu:Courses_{course_code} .
-                     gu:Senior_Teachers_{examiner} gu:isExaminerOf gu:Course_Instance_{instance_id} .
+                     gu:{examiner} gu:isExaminerOf gu:Course_Instance_{instance_id} .
                      """)
 
 # 7. ASSIGNED HOURS
