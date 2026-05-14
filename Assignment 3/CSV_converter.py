@@ -179,7 +179,7 @@ with open("Course_Instances.csv", "r", encoding="utf-8") as file:
 
     for row in reader:
 
-        instance_id = row.get("Instance_id")
+        instance_id = clean(row.get("Instance_id"))
         course_code = row.get('Course code')
         study_period = row.get('Study period')
         academic_year = row.get('Academic year')[:4]
@@ -207,7 +207,7 @@ with open("Assigned_Hours.csv", "r", encoding="utf-8") as file:
         academic_year = row.get('Academic Year')[:4]
         teacher = clean(row.get('Teacher Id'))
         assigned_hours = row.get('Hours')
-        course_instance = row.get('Course Instance')
+        course_instance = clean(row.get('Course Instance'))
         hoursId = f"Hours_Id_{teacher}_{course_instance}"
 
         output.write(f"""
@@ -226,7 +226,7 @@ with open("Reported_Hours.csv", "r", encoding="utf-8") as file:
 
     for row in reader:
 
-        course_instance = row.get('Course code')
+        course_instance = clean(row.get('Course code'))
         teacher = clean(row.get('Teacher Id'))
         reported_hours = row.get('Hours')
         hoursId = f"Hours_Id_{teacher}_{course_instance}"
@@ -249,7 +249,7 @@ with open("Course_plannings.csv", "r", encoding="utf-8") as file:
     
     for row in reader:
 
-        course_instance = row.get('Course')
+        course_instance = clean(row.get('Course'))
         plannedNumber = row.get('Planned number of Students')
         senior_hours = row.get('Senior Hours')
         assistant_hours = row.get('Assistant Hours')
@@ -300,7 +300,7 @@ with open("Registrations.csv", "r", encoding="utf-8") as file:
 
         student_id = clean(row["Student id"])
         grade = row['Grade']
-        course_instance = row["Course Instance"]
+        course_instance = clean(row["Course Instance"])
 
         output.write(f"""
                      gu:Registrations_{count} rdf:type gu:Registration ;
