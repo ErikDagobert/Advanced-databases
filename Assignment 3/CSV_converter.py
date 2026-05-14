@@ -179,7 +179,7 @@ with open("Course_Instances.csv", "r", encoding="utf-8") as file:
 
     for row in reader:
 
-        instance_id = clean(row.get("Instance_id"))
+        instance_id = row.get("Instance_id")
         course_code = row.get('Course code')
         study_period = row.get('Study period')
         academic_year = row.get('Academic year')[:4]
@@ -214,7 +214,7 @@ with open("Assigned_Hours.csv", "r", encoding="utf-8") as file:
                      gu:{hoursId} rdf:type gu:Hours ;
                      gu:hoursId "{hoursId}" ;
                      gu:assignedHours {assigned_hours} ;
-                     gu::hoursIn gu:Course_Instance_{course_instance} .
+                     gu:hoursIn gu:Course_Instance_{course_instance} .
                      gu:{teacher} gu:hasHours gu:{hoursId} .
                      """)
 
@@ -235,7 +235,7 @@ with open("Reported_Hours.csv", "r", encoding="utf-8") as file:
                      gu:{hoursId} rdf:type gu:Hours ;
                      gu:hoursId "{hoursId}" ;
                      gu:reportedHours {reported_hours} ;
-                     gu::hoursIn gu:Course_Instance_{course_instance} .
+                     gu:hoursIn gu:Course_Instance_{course_instance} .
                      gu:{teacher} gu:hasHours gu:{hoursId} .
                      """)
 
