@@ -147,7 +147,7 @@ with open("Courses.csv", "r", encoding="utf-8") as file:
         level = row.get('Level')
         division = clean(row.get('Division'))
         department = row.get('Department')
-        programme = row.get('Owned by')
+        programme = row.get('Owned By')
 
         if department and department not in departments:
             departments.add(department)
