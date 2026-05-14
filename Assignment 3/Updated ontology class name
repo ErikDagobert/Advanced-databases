@@ -1,0 +1,466 @@
+@prefix : <http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3/> .
+
+<http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#belongsToDepartmet
+:belongsToDepartmet rdf:type owl:ObjectProperty ,
+                             owl:FunctionalProperty ;
+                    rdfs:domain :Programme ;
+                    rdfs:range :Department .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#belongsToDivision
+:belongsToDivision rdf:type owl:ObjectProperty ,
+                            owl:FunctionalProperty ;
+                   rdfs:domain :Teacher ;
+                   rdfs:range :Division .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#courseIn
+:courseIn rdf:type owl:ObjectProperty ,
+                   owl:FunctionalProperty ,
+                   owl:InverseFunctionalProperty ;
+          rdfs:domain :ProgrammeCourse ;
+          rdfs:range :Programme .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#directorOfProgramme
+:directorOfProgramme rdf:type owl:ObjectProperty ,
+                              owl:InverseFunctionalProperty ;
+                     rdfs:domain :SeniorTeacher ;
+                     rdfs:range :Programme .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#divisionOf
+:divisionOf rdf:type owl:ObjectProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain :Division ;
+            rdfs:range :Department .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#givenByDivision
+:givenByDivision rdf:type owl:ObjectProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:domain :Course ;
+                 rdfs:range :Division .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#hasHours
+:hasHours rdf:type owl:ObjectProperty ,
+                   owl:FunctionalProperty ,
+                   owl:InverseFunctionalProperty ;
+          rdfs:domain :Teacher ;
+          rdfs:range :Hours .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#hoursIn
+:hoursIn rdf:type owl:ObjectProperty ,
+                  owl:FunctionalProperty ,
+                  owl:InverseFunctionalProperty ;
+         rdfs:domain :Hours ;
+         rdfs:range :Course_instance .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#instanceOf
+:instanceOf rdf:type owl:ObjectProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain :Course_instance ;
+            rdfs:range :Course .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#isExaminerOf
+:isExaminerOf rdf:type owl:ObjectProperty ,
+                       owl:InverseFunctionalProperty ;
+              rdfs:domain :SeniorTeacher ;
+              rdfs:range :Course_instance .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#ownedByProgramme
+:ownedByProgramme rdf:type owl:ObjectProperty ,
+                           owl:FunctionalProperty ;
+                  rdfs:domain :Course ;
+                  rdfs:range :Programme .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#planningFor
+:planningFor rdf:type owl:ObjectProperty ,
+                      owl:FunctionalProperty ;
+             rdfs:domain :Course_planning ;
+             rdfs:range :Course_instance .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#programmeCourseOfInstance
+:programmeCourseOfInstance rdf:type owl:ObjectProperty ,
+                                    owl:FunctionalProperty ,
+                                    owl:InverseFunctionalProperty ;
+                           rdfs:domain :ProgrammeCourse ;
+                           rdfs:range :Course_instance .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#registeredAt
+:registeredAt rdf:type owl:ObjectProperty ,
+                       owl:FunctionalProperty ,
+                       owl:InverseFunctionalProperty ;
+              rdfs:domain :Student ;
+              rdfs:range :Registration .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#registrationFor
+:registrationFor rdf:type owl:ObjectProperty ,
+                          owl:FunctionalProperty ,
+                          owl:InverseFunctionalProperty ;
+                 rdfs:domain :Registration ;
+                 rdfs:range :Course_instance .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#startedWith
+:startedWith rdf:type owl:ObjectProperty ,
+                      owl:FunctionalProperty ;
+             rdfs:domain :Student ;
+             rdfs:range :ProgrammeCourse .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#academicYear
+:academicYear rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Course_instance ;
+              rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#assignedHours
+:assignedHours rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Hours ;
+               rdfs:range [ rdf:type rdfs:Datatype ;
+                            owl:onDatatype xsd:double ;
+                            owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:double
+                                                   ]
+                                                 )
+                          ] .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#assistantHours
+:assistantHours rdf:type owl:DatatypeProperty ;
+                rdfs:domain :Course_planning ;
+                rdfs:range [ rdf:type rdfs:Datatype ;
+                             owl:onDatatype xsd:double ;
+                             owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:double
+                                                    ]
+                                                  )
+                           ] .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#courseCode
+:courseCode rdf:type owl:DatatypeProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain :Course ;
+            rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#courseName
+:courseName rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Course ;
+            rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#courseType
+:courseType rdf:type owl:DatatypeProperty ;
+            rdfs:domain :ProgrammeCourse ;
+            rdfs:range [ rdf:type rdfs:Datatype ;
+                         owl:oneOf [ rdf:type rdf:List ;
+                                     rdf:first "compulsory" ;
+                                     rdf:rest [ rdf:type rdf:List ;
+                                                rdf:first "compulsory-elective" ;
+                                                rdf:rest [ rdf:type rdf:List ;
+                                                           rdf:first "elective" ;
+                                                           rdf:rest rdf:nil
+                                                         ]
+                                              ]
+                                   ]
+                       ] .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#credits
+:credits rdf:type owl:DatatypeProperty ;
+         rdfs:domain :Course ;
+         rdfs:range [ rdf:type rdfs:Datatype ;
+                      owl:onDatatype xsd:double ;
+                      owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:double
+                                             ]
+                                           )
+                    ] .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#divisionName
+:divisionName rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Division ;
+              rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#grade
+:grade rdf:type owl:DatatypeProperty ,
+                owl:FunctionalProperty ;
+       rdfs:domain :Registration ;
+       rdfs:range [ rdf:type rdfs:Datatype ;
+                    owl:oneOf [ rdf:type rdf:List ;
+                                rdf:first 3 ;
+                                rdf:rest [ rdf:type rdf:List ;
+                                           rdf:first 4 ;
+                                           rdf:rest [ rdf:type rdf:List ;
+                                                      rdf:first 5 ;
+                                                      rdf:rest rdf:nil
+                                                    ]
+                                         ]
+                              ]
+                  ] .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#graduated
+:graduated rdf:type owl:DatatypeProperty ;
+           rdfs:domain :Student ;
+           rdfs:range xsd:boolean .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#hoursId
+:hoursId rdf:type owl:DatatypeProperty ;
+         rdfs:domain :Hours ;
+         rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#instanceId
+:instanceId rdf:type owl:DatatypeProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain :Course_instance ;
+            rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#level
+:level rdf:type owl:DatatypeProperty ;
+       rdfs:domain :Course ;
+       rdfs:range [ rdf:type rdfs:Datatype ;
+                    owl:oneOf [ rdf:type rdf:List ;
+                                rdf:first "first cycle" ;
+                                rdf:rest [ rdf:type rdf:List ;
+                                           rdf:first "second cycle" ;
+                                           rdf:rest rdf:nil
+                                         ]
+                              ]
+                  ] .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#plannedNumberOfStudents
+:plannedNumberOfStudents rdf:type owl:DatatypeProperty ;
+                         rdfs:domain :Course_planning ;
+                         rdfs:range [ rdf:type rdfs:Datatype ;
+                                      owl:onDatatype xsd:int ;
+                                      owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:int
+                                                             ]
+                                                           )
+                                    ] .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#programmeCode
+:programmeCode rdf:type owl:DatatypeProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain :Programme ;
+               rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#programmeCourseId
+:programmeCourseId rdf:type owl:DatatypeProperty ,
+                            owl:FunctionalProperty ;
+                   rdfs:domain :ProgrammeCourse ;
+                   rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#programmeName
+:programmeName rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Programme ;
+               rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#registrationId
+:registrationId rdf:type owl:DatatypeProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain :Registration ;
+                rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#reportedHours
+:reportedHours rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Hours ;
+               rdfs:range [ rdf:type rdfs:Datatype ;
+                            owl:onDatatype xsd:double ;
+                            owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:double
+                                                   ]
+                                                 )
+                          ] .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#seniorHours
+:seniorHours rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Course_planning ;
+             rdfs:range [ rdf:type rdfs:Datatype ;
+                          owl:onDatatype xsd:double ;
+                          owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:double
+                                                 ]
+                                               )
+                        ] .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#status
+:status rdf:type owl:DatatypeProperty ;
+        rdfs:domain :Registration ;
+        rdfs:range [ rdf:type rdfs:Datatype ;
+                     owl:oneOf [ rdf:type rdf:List ;
+                                 rdf:first "completed" ;
+                                 rdf:rest [ rdf:type rdf:List ;
+                                            rdf:first "not started" ;
+                                            rdf:rest [ rdf:type rdf:List ;
+                                                       rdf:first "registered" ;
+                                                       rdf:rest [ rdf:type rdf:List ;
+                                                                  rdf:first "withdrawn" ;
+                                                                  rdf:rest rdf:nil
+                                                                ]
+                                                     ]
+                                          ]
+                               ]
+                   ] .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#studentId
+:studentId rdf:type owl:DatatypeProperty ,
+                    owl:FunctionalProperty ;
+           rdfs:domain :Student ;
+           rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#studentName
+:studentName rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Student ;
+             rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#studyPeriod
+:studyPeriod rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Course_instance ;
+             rdfs:range [ rdf:type rdfs:Datatype ;
+                          owl:oneOf [ rdf:type rdf:List ;
+                                      rdf:first 1 ;
+                                      rdf:rest [ rdf:type rdf:List ;
+                                                 rdf:first 2 ;
+                                                 rdf:rest [ rdf:type rdf:List ;
+                                                            rdf:first 3 ;
+                                                            rdf:rest [ rdf:type rdf:List ;
+                                                                       rdf:first 4 ;
+                                                                       rdf:rest rdf:nil
+                                                                     ]
+                                                          ]
+                                               ]
+                                    ]
+                        ] .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#studyYear
+:studyYear rdf:type owl:DatatypeProperty ;
+           rdfs:domain :ProgrammeCourse ;
+           rdfs:range [ rdf:type rdfs:Datatype ;
+                        owl:oneOf [ rdf:type rdf:List ;
+                                    rdf:first 1 ;
+                                    rdf:rest [ rdf:type rdf:List ;
+                                               rdf:first 2 ;
+                                               rdf:rest [ rdf:type rdf:List ;
+                                                          rdf:first 3 ;
+                                                          rdf:rest rdf:nil
+                                                        ]
+                                             ]
+                                  ]
+                      ] .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#teacherId
+:teacherId rdf:type owl:DatatypeProperty ,
+                    owl:FunctionalProperty ;
+           rdfs:domain :Teacher ;
+           rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#teacherName
+:teacherName rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Teacher ;
+             rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#Course
+:Course rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#Course_instance
+:Course_instance rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#Course_planning
+:Course_planning rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#Department
+:Department rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#Division
+:Division rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#Hours
+:Hours rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#Programme
+:Programme rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#ProgrammeCourse
+:ProgrammeCourse rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#Registration
+:Registration rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#SeniorTeacher
+:SeniorTeacher rdf:type owl:Class ;
+                rdfs:subClassOf :Teacher ;
+                owl:disjointWith :TeachingAssistant .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#Student
+:Student rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#Teacher
+:Teacher rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/erikdagobert/ontologies/2026/3/untitled-ontology-3#TeachingAssistant
+:TeachingAssistant rdf:type owl:Class ;
+                    rdfs:subClassOf :Student ,
+                                    :Teacher .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
